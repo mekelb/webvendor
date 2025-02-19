@@ -3,7 +3,7 @@ import psycopg2
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for flashing messages
-
+###tambah komen
 # Database connection details
 DB_HOST = '10.101.1.149'
 DB_NAME = 'WEB_DEV'
