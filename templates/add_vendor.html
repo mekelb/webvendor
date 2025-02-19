@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <title>Add Vendor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Add New Vendor</h1>
+        <form method="POST" action="{{ url_for('add_vendor') }}" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label for="departmentname" class="block text-gray-700 font-medium mb-2">Department Name</label>
+                <input type="text" id="departmentname" name="departmentname" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="vendorname" class="block text-gray-700 font-medium mb-2">Vendor Name</label>
+                <input type="text" id="vendorname" name="vendorname" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                <input type="email" id="email" name="email" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="kind" class="block text-gray-700 font-medium mb-2">Kind</label>
+                <input type="text" id="kind" name="kind" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="brandname" class="block text-gray-700 font-medium mb-2">Brand Name</label>
+                <input type="text" id="brandname" name="brandname" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-6">
+                <label for="vendorname2" class="block text-gray-700 font-medium mb-2">Vendor Name 2</label>
+                <input type="text" id="vendorname2" name="vendorname2" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                    Add Vendor
+                </button>
+            </div>
+        </form>
+        <div class="text-center mt-6">
+            <a href="{{ url_for('index') }}" class="text-blue-500 hover:text-blue-600 transition duration-300">
+                ← Back to Vendor List
+            </a>
+        </div>
+    </div>
+</body>
+</html>
