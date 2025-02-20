@@ -42,6 +42,8 @@ def index():
         vendors = [vendor for vendor in vendors if vendor[1] == selected_department]
     
     return render_template('index.html', departments=departments, vendors=vendors, selected_department=selected_department)
+
+
 @app.route('/add_vendor', methods=['GET', 'POST'])
 def add_vendor():
     if request.method == 'POST':
@@ -70,39 +72,45 @@ def add_vendor():
 
     return render_template('add_vendor.html')
 
+
 @app.route('/edit_vendor', methods=['GET', 'POST'])
 def edit_vendor():
+    vendorname = request.args.get('vendorname')  # Get vendor name from URL
+    if not vendorname:
+        return "Vendor name is required", 400  # Handle missing vendor name
+
     conn = get_db_connection()
-    cur = conn.cursor()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM staging.vendor WHERE vendorname = %s", (vendorname,))
+    vendor = cursor.fetchone()
+
+    print("Fetched vendor:", vendor)  # Debugging
+
+    if not vendor:
+        return "Vendor not found", 404  # Handle missing vendor
 
     if request.method == 'POST':
-        # Get form data
-        vendorname = request.form['vendorname']
         departmentname = request.form['departmentname']
         email = request.form['email']
         kind = request.form['kind']
         brandname = request.form['brandname']
         vendorname2 = request.form['vendorname2']
 
-        # Update the vendor in the database
-        cur.execute(
-            'UPDATE staging.vendor SET departmentname = %s, email = %s, kind = %s, brandname = %s, vendorname2 = %s WHERE vendorname = %s',
-            (departmentname, email, kind, brandname, vendorname2, vendorname)
-        )
+        cursor.execute("""
+            UPDATE staging.vendor
+            SET departmentname = %s, email = %s, kind = %s, brandname = %s, vendorname2 = %s 
+            WHERE vendorname = %s
+        """, (departmentname, email, kind, brandname, vendorname2, vendorname))
         conn.commit()
-        cur.close()
+        cursor.close()
         conn.close()
-
-        flash('Vendor updated successfully!', 'success')
         return redirect(url_for('index'))
 
-    # Fetch all vendor names for the dropdown
-    cur.execute('SELECT DISTINCT vendorname FROM staging.vendor;')
-    vendornames = cur.fetchall()
-    cur.close()
+    cursor.close()
     conn.close()
 
-    return render_template('edit_vendor.html', vendornames=vendornames)
+    return render_template('edit_vendor.html', vendor=vendor)
 
 if __name__ == '__main__':
     app.run(debug=True)
